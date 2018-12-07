@@ -43,7 +43,7 @@ def predict(window):
     X = np.reshape(X,(1,-1))
 
     # TODO: Fill in speaker names. Make sure labels match your training data
-    classes = ['low', 'high'] #...
+    classes = ['low', 'high', 'silence'] #...
 
     index = classifier.predict(X)
     speaker = classes[int(index)]

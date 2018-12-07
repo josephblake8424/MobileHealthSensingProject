@@ -18,18 +18,18 @@ import pickle
 # -----------------------------------------------------------------------------
 
 data_dir = 'data' # directory where the data files are stored
-
+input("press enter")
 output_dir = 'training_output' # directory where the classifier(s) are stored
-
+input("press enter")
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
 # the filenames should be in the form 'speaker-data-subject-1.csv', e.g. 'speaker-data-Erik-1.csv'.
 
-class_names = ["greg","joe","ryan","silence"] # the set of classes, i.e. speakers
+class_names = ["low", "high","silence"] # the set of classes, i.e. speakers
 
 data = np.zeros((0,8002)) #8002 = 1 (timestamp) + 8000 (for 8kHz audio data) + 1 (label)
-
+input("press enter")
 for filename in os.listdir(data_dir):
     if filename.endswith(".csv") and filename.startswith("speaker-data"):
         filename_components = filename.split("-") # split by the '-' character
@@ -44,7 +44,7 @@ for filename in os.listdir(data_dir):
         print("Loaded {} raw labelled audio data samples.".format(len(data_for_current_speaker)))
         sys.stdout.flush()
         data = np.append(data, data_for_current_speaker, axis=0)
-
+input("press enter")
 print("Found data for {} speakers : {}".format(len(class_names), ", ".join(class_names)))
 
 # %%---------------------------------------------------------------------------
@@ -55,7 +55,7 @@ print("Found data for {} speakers : {}".format(len(class_names), ", ".join(class
 
 # Update this depending on how you compute your features
 n_features = 964
-
+input("press enter")
 print("Extracting features and labels for {} audio windows...".format(data.shape[0]))
 sys.stdout.flush()
 
@@ -170,5 +170,6 @@ best_classifier.fit(X,y)
 
 classifier_filename='classifier.pickle'
 print("Saving best classifier to {}...".format(os.path.join(output_dir, classifier_filename)))
+input("press enter")
 with open(os.path.join(output_dir, classifier_filename), 'wb') as f: # 'wb' stands for 'write bytes'
     pickle.dump(best_classifier, f)

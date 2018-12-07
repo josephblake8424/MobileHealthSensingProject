@@ -11,7 +11,7 @@ user_id = "1337"
 
 # TODO: Change the filename of the output file.
 # You should keep it in the format "speaker-data-<speaker>-#.csv"
-filename="JoeLow-0.csv"#"speaker-data-HenryVIII-1.csv"
+filename="speaker-data-low-0.csv"#"speaker-data-HenryVIII-1.csv"
 
 # TODO: Change the label to match the speaker; it must be numeric
 label = 0

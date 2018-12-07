@@ -5,10 +5,19 @@ import math
 from scipy.signal import lfilter
 from audiolazy import lpc
 from python_speech_features import mfcc
+import librosa
+from librosa.features import tempogram
 
 class FeatureExtractor():
     def __init__(self, debug=True):
         self.debug = debug
+
+    def _compute_tempo(self, audio_buffer):
+        """
+        uses
+        """
+        sample_rate = 8000
+        tempo = tempogram(y = audio_buffer, sr = sample_rate)
 
     def _compute_formants(self, audio_buffer):
         """
@@ -168,5 +177,6 @@ class FeatureExtractor():
 
         x = np.append(x, self._compute_formant_features(window))
         x = np.append(x, self._compute_delta_coefficients(window))
+        x = np.append(x, self._compute_tempo(window))
 
         return x
