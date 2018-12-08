@@ -5,7 +5,7 @@ import math
 from scipy.signal import lfilter
 from audiolazy import lpc
 from python_speech_features import mfcc
-from librosa.feature import tempogram
+from librosa.feature import tempogram, melspectrogram
 
 class FeatureExtractor():
     def __init__(self, debug=True):
@@ -18,6 +18,10 @@ class FeatureExtractor():
         sample_rate = 8000
         tempo = tempogram(y = audio_buffer.astype(float), sr = sample_rate, norm = None)
         return tempo
+
+    def _compute_melspec(self, audio_buffer):
+        spec = melspectrogram(y= audio_buffer.astype(float), sr = 8000)
+        return spec
 
     def _compute_formants(self, audio_buffer):
         """
@@ -101,7 +105,7 @@ class FeatureExtractor():
         """
         #print("formant:")
         #print(np.histogram(self._compute_formants(window), range=(0,5500)).shape)
-        return np.histogram(self._compute_formants(window), range=(0,5500), bins = 16)[0] # returns dummy value; replace this with the features you extract
+        return np.histogram(self._compute_formants(window), range=(0,5500), bins = 20)[0] # returns dummy value; replace this with the features you extract
 
 
     def _compute_mfcc(self, window):
@@ -178,5 +182,6 @@ class FeatureExtractor():
         x = np.append(x, self._compute_formant_features(window))
         x = np.append(x, self._compute_delta_coefficients(window))
         x = np.append(x, self._compute_tempo(window))
+        x = np.append(x, self._compute_melspec(window))
 
         return x
